@@ -1,0 +1,36 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "Lima.UseCases/1.0.0": {
+        "dependencies": {
+          "Lima.Businuess": "1.0.0"
+        },
+        "runtime": {
+          "Lima.UseCases.dll": {}
+        }
+      },
+      "Lima.Businuess/1.0.0": {
+        "runtime": {
+          "Lima.Businuess.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Lima.UseCases/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Lima.Businuess/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

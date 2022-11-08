@@ -1,0 +1,15 @@
+C:\Projects\LIMA\Lima.UseCases\bin\Debug\net6.0\Lima.UseCases.deps.json
+C:\Projects\LIMA\Lima.UseCases\bin\Debug\net6.0\Lima.UseCases.dll
+C:\Projects\LIMA\Lima.UseCases\bin\Debug\net6.0\Lima.UseCases.pdb
+C:\Projects\LIMA\Lima.UseCases\bin\Debug\net6.0\Lima.Businuess.dll
+C:\Projects\LIMA\Lima.UseCases\bin\Debug\net6.0\Lima.Businuess.pdb
+C:\Projects\LIMA\Lima.UseCases\obj\Debug\net6.0\Lima.UseCases.csproj.AssemblyReference.cache
+C:\Projects\LIMA\Lima.UseCases\obj\Debug\net6.0\Lima.UseCases.GeneratedMSBuildEditorConfig.editorconfig
+C:\Projects\LIMA\Lima.UseCases\obj\Debug\net6.0\Lima.UseCases.AssemblyInfoInputs.cache
+C:\Projects\LIMA\Lima.UseCases\obj\Debug\net6.0\Lima.UseCases.AssemblyInfo.cs
+C:\Projects\LIMA\Lima.UseCases\obj\Debug\net6.0\Lima.UseCases.csproj.CoreCompileInputs.cache
+C:\Projects\LIMA\Lima.UseCases\obj\Debug\net6.0\Lima.UseCases.csproj.CopyComplete
+C:\Projects\LIMA\Lima.UseCases\obj\Debug\net6.0\Lima.UseCases.dll
+C:\Projects\LIMA\Lima.UseCases\obj\Debug\net6.0\refint\Lima.UseCases.dll
+C:\Projects\LIMA\Lima.UseCases\obj\Debug\net6.0\Lima.UseCases.pdb
+C:\Projects\LIMA\Lima.UseCases\obj\Debug\net6.0\ref\Lima.UseCases.dll

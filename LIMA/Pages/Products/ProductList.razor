@@ -1,0 +1,70 @@
+﻿@page "/products"
+@using LIMA.Controls
+@inject NavigationManager Navman
+@inject IViewProducts Viewproducts
+
+@attribute [Authorize]
+
+<h3>Product List</h3>
+<br />
+
+<ViewProductComponent OnSearchProducts="OnSearchProducts"></ViewProductComponent>
+
+@if(listProducts != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Description</th>
+                <th>Quantity</th>
+                <th>Unit Price</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var product in this.listProducts)
+            {
+               <ProductItemComponent 
+                   Product="product"
+                   OnProductDeleted="OnProductDeleted"></ProductItemComponent>
+            }
+        </tbody>
+    </table>
+}
+<br/>
+<button type="button" class="btn btn-primary" @onclick="AddProduct">Add Product</button>
+<NavLink class="btn btn-secondary" href="produce">
+    <span class="oi oi-plus" aria-hidden="true"></span> Produce Product
+</NavLink>
+<NavLink class="btn btn-secondary" href="sell">
+    <span class="oi oi-plus" aria-hidden="true"></span> Sell Product
+</NavLink>
+@code {
+    private List<Product> listProducts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadProducts();
+    }
+    private void OnSearchProducts(List<Product> products)
+    {
+        this.listProducts = products;
+    }
+    private void AddProduct()
+    {
+        Navman.NavigateTo("/addproduct");
+    }
+    private async Task OnProductDeleted()
+    {
+        await LoadProducts();
+    }
+
+    private async Task LoadProducts()
+    {
+        var prods = await Viewproducts.ExecuteAsync();
+        this.listProducts = prods.ToList();   
+    }
+
+}

@@ -1,0 +1,83 @@
+﻿@page "/sell"
+
+@attribute [Authorize]
+
+@inject ISellProduct SaleP
+@inject NavigationManager Navman
+
+<ErrorMsgComponent ErrorMessage="@errorMessage"></ErrorMsgComponent>
+<h3>Sale Products</h3>
+<br/>
+@if(sellViewModel != null)
+{
+    <EditForm Model="sellViewModel" OnValidSubmit="OnValidSubmit">
+        <DataAnnotationsValidator></DataAnnotationsValidator>
+        
+
+        <div class="form-group">
+            <lable for="so">Sales Order Number</lable>
+            <InputText id="so" @bind-Value = "sellViewModel.SalesOrderNumber" class="form-control"></InputText>
+        </div>
+
+        <div class="form-group">
+            <lable for="inv">Product to Sell</lable>
+            <ViewProductComponent
+                OnSelectProduct="OnSelectProduct"
+                DisplaySearchResult="true"></ViewProductComponent>
+            <InputText id="inv" class="form-control" @bind-Value = "sellViewModel.ProductName" disabled></InputText>
+            <input type="hidden" value="@sellViewModel.ProductId" />
+        </div>
+
+        <div class="form-group">
+            <lable for="price">Price</lable>
+            <InputNumber id="price" @bind-Value = "sellViewModel.ProductPrice" class="form-control"></InputNumber>
+        </div>
+
+        <div class="form-group">
+            <lable for="qty">Quantity</lable>
+            <InputNumber id="qty" @bind-Value = "sellViewModel.QuantityToSell" class="form-control"></InputNumber>
+        </div>
+        <br/>
+        <button type="submit" class="btn btn-primary">Sale</button>
+
+
+    </EditForm>
+}
+@code {
+    private SellViewModel sellViewModel = new SellViewModel();
+    private Product selectedProduct;
+    private string errorMessage;
+
+    private void OnValidSubmit()
+    {
+        //Validation for enough products to sale
+        if(this.selectedProduct.Quantity < this.sellViewModel.QuantityToSell)
+        {
+            this.errorMessage = "Not enough products for sale";
+        }
+        else
+        {
+            this.errorMessage = string.Empty;
+
+
+            SaleP.ExecuteAsync(
+                this.sellViewModel.SalesOrderNumber,
+                this.selectedProduct,
+                this.sellViewModel.QuantityToSell,
+                "Bracious Mukuka"
+            );
+
+            Navman.NavigateTo("/products");
+        }
+        
+
+    }
+
+    private void OnSelectProduct(Product product)
+    {
+        this.selectedProduct = product;
+        sellViewModel.ProductId = product.ProductId;
+        sellViewModel.ProductName = product.ProductName;
+        sellViewModel.ProductPrice = product.Price;
+    }
+}

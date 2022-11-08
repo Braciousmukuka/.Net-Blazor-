@@ -1,0 +1,83 @@
+﻿@page "/produce"
+
+@inject NavigationManager Navman
+@inject IProduceProduct ProduceProduct
+@inject IValidateEnoughInventories4Production I4P
+
+@attribute [Authorize]
+
+
+<ErrorMsgComponent ErrorMessage="@errorMessage"></ErrorMsgComponent>
+<h3>Produce Product</h3>
+<br/>
+@if(produceViewModel != null)
+{
+    <EditForm Model="produceViewModel" OnValidSubmit="OnValidSubmit">
+        <DataAnnotationsValidator></DataAnnotationsValidator>
+        
+
+        <div class="form-group">
+            <label for="pn">Production Number</label>
+            <InputText id="pn" @bind-Value="produceViewModel.ProductionNumber" class="form-control"></InputText>
+        </div>
+
+         <div class="form-group">
+            <label for="pn">Product to Produce</label>
+            <ViewProductComponent
+                OnSelectProduct="OnSelectProduct"
+                DisplaySearchResult="true"></ViewProductComponent>
+            <InputText id="pn" class="form-control" @bind-Value="produceViewModel.ProductName" disabled ></InputText>
+            <input type="hidden" value="@produceViewModel.ProductId" />
+            @if (selectedProduct != null)
+            {
+                <text>Available Products Total:</text>
+                @selectedProduct?.Price.ToString()
+            }
+        </div>
+        <div class="form-group">
+            <label for="qty">Quantity</label>
+            <InputNumber id="qty" @bind-Value="produceViewModel.QuantityToProduce" class="form-control"></InputNumber>
+        </div>
+        <br/>
+        <button type="submit" class="btn btn-primary">Produce</button>
+
+    </EditForm>
+}
+
+@code {
+    private ProduceViewModel produceViewModel = new ProduceViewModel();
+    private Product selectedProduct;
+    private string errorMessage;
+
+    private async Task OnValidSubmit()
+    {
+        if(!await I4P.ExecuteAsync(this.selectedProduct, this.produceViewModel.QuantityToProduce))
+        {
+            errorMessage = $"The inventories are not enough for production of {this.selectedProduct.ProductName}";
+            return;
+        }
+        else
+        {
+            errorMessage = string.Empty;
+        }
+        await ProduceProduct.ExecuteAsync(
+            this.produceViewModel.ProductionNumber,
+            this.selectedProduct,
+            this.produceViewModel.QuantityToProduce,
+            "Bracious Mukuka"
+        );
+        //Makes new instance 
+        //this.produceViewModel = new ProduceViewModel();
+        //this.selectedProduct = null;
+
+        Navman.NavigateTo("/products");
+    }
+
+    public void OnSelectProduct(Product product)
+    {
+        this.selectedProduct = product;
+        produceViewModel.ProductId = product.ProductId;
+        produceViewModel.ProductName = product.ProductName;
+    }
+
+}
